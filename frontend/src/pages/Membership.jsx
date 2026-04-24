@@ -43,7 +43,7 @@ const Membership = () => {
             <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
           </div>
           <h2 className="text-3xl font-bold mb-4">Application Received!</h2>
-          <p className="text-gray-500 dark:text-gray-400">Thank you for applying to join Club Beast. Our team will review your application and get back to you shortly.</p>
+          <p className="text-gray-500 dark:text-gray-400">Thank you for applying to join Club culturel El Medina. Our team will review your application and get back to you shortly.</p>
         </motion.div>
       </div>
     );

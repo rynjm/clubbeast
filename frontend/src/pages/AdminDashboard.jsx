@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
-import { Users, Calendar as CalIcon, Ticket, Trash2, Edit } from "lucide-react";
+import { Users, User, Calendar as CalIcon, Ticket, Trash2, Edit, Mail } from "lucide-react";
 
 const AdminDashboard = () => {
   const { user } = useContext(AuthContext);
@@ -10,6 +10,7 @@ const AdminDashboard = () => {
   const [events, setEvents] = useState([]);
   const [users, setUsers] = useState([]);
   const [registrations, setRegistrations] = useState([]);
+  const [messages, setMessages] = useState([]);
   
   const [newEvent, setNewEvent] = useState({ title: "", description: "", date: "", location: "", imageUrl: "" });
 
@@ -29,6 +30,9 @@ const AdminDashboard = () => {
       } else if (activeTab === "registrations") {
         const { data } = await axios.get("https://clubbeast.onrender.com/api/registrations", config);
         setRegistrations(data);
+      } else if (activeTab === "messages") {
+        const { data } = await axios.get("https://clubbeast.onrender.com/api/messages", config);
+        setMessages(data);
       }
     } catch (error) {
       console.error(error);
@@ -61,6 +65,19 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleDeleteMessage = async (id) => {
+    if(window.confirm("Delete this message?")) {
+      try {
+        await axios.delete(`https://clubbeast.onrender.com/api/messages/${id}`, {
+          headers: { Authorization: `Bearer ${user.token}` }
+        });
+        fetchData();
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
   return (
     <div className="pt-24 pb-20 px-4 max-w-7xl mx-auto min-h-screen">
       <div className="flex flex-col md:flex-row justify-between items-center mb-10">
@@ -69,6 +86,7 @@ const AdminDashboard = () => {
           <button onClick={() => setActiveTab('events')} className={`px-4 py-2 rounded-lg font-medium transition flex items-center ${activeTab === 'events' ? 'bg-white dark:bg-black shadow text-purple-600' : 'text-gray-500'}`}><CalIcon size={16} className="mr-2" /> Events</button>
           <button onClick={() => setActiveTab('users')} className={`px-4 py-2 rounded-lg font-medium transition flex items-center ${activeTab === 'users' ? 'bg-white dark:bg-black shadow text-purple-600' : 'text-gray-500'}`}><Users size={16} className="mr-2" /> Users</button>
           <button onClick={() => setActiveTab('registrations')} className={`px-4 py-2 rounded-lg font-medium transition flex items-center ${activeTab === 'registrations' ? 'bg-white dark:bg-black shadow text-purple-600' : 'text-gray-500'}`}><Ticket size={16} className="mr-2" /> Registrations</button>
+          <button onClick={() => setActiveTab('messages')} className={`px-4 py-2 rounded-lg font-medium transition flex items-center ${activeTab === 'messages' ? 'bg-white dark:bg-black shadow text-purple-600' : 'text-gray-500'}`}><Mail size={16} className="mr-2" /> Messages</button>
         </div>
       </div>
 
@@ -163,6 +181,32 @@ const AdminDashboard = () => {
                 </tbody>
               </table>
             </div>
+          </div>
+        )}
+
+        {activeTab === "messages" && (
+          <div className="space-y-4">
+            {messages.length === 0 && <p className="text-center py-10 text-gray-500">No messages yet.</p>}
+            {messages.map(msg => (
+              <div key={msg._id} className="glass p-6 rounded-2xl border border-gray-100 dark:border-gray-800">
+                <div className="flex justify-between items-start mb-4">
+                  <div>
+                    <h3 className="text-lg font-bold text-purple-600">{msg.subject}</h3>
+                    <div className="flex items-center space-x-4 text-sm text-gray-500 mt-1">
+                      <span className="flex items-center"><User size={14} className="mr-1" /> {msg.name}</span>
+                      <span className="flex items-center"><Mail size={14} className="mr-1" /> {msg.email}</span>
+                      <span>{new Date(msg.createdAt).toLocaleString()}</span>
+                    </div>
+                  </div>
+                  <button onClick={() => handleDeleteMessage(msg._id)} className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition">
+                    <Trash2 size={20} />
+                  </button>
+                </div>
+                <div className="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-xl text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
+                  {msg.message}
+                </div>
+              </div>
+            ))}
           </div>
         )}
       </motion.div>

@@ -30,7 +30,7 @@ const Home = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-6"
+            className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-6"
           >
             EXPERIENCE THE <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">EXTRAORDINARY</span>
           </motion.h1>
@@ -38,9 +38,9 @@ const Home = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-xl md:text-2xl text-gray-200 mb-10 max-w-3xl mx-auto"
+            className="text-lg sm:text-xl md:text-2xl text-gray-200 mb-10 max-w-3xl mx-auto"
           >
-            Join Club Beast for unforgettable cultural events, music, and art. The ultimate student experience awaits.
+            Join Club culturel El Medina for unforgettable cultural events, music, and art. The ultimate student experience awaits.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -56,7 +56,7 @@ const Home = () => {
 
       <section className="py-20 px-4 max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4">UPCOMING HIGHLIGHTS</h2>
+          <h2 className="text-4xl font-bold mb-4 uppercase">Upcoming Highlights</h2>
           <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full"></div>
         </div>
         

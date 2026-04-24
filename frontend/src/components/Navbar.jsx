@@ -28,7 +28,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0">
             <Link to="/" className="text-2xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
-              CLUB BEAST
+              CLUB CULTUREL EL MEDINA
             </Link>
           </div>
           <div className="hidden md:block">
@@ -36,6 +36,8 @@ const Navbar = () => {
               <Link to="/events" className="hover:text-purple-500 transition px-3 py-2 rounded-md text-sm font-medium">Events</Link>
               <Link to="/gallery" className="hover:text-purple-500 transition px-3 py-2 rounded-md text-sm font-medium">Gallery</Link>
               <Link to="/calendar" className="hover:text-purple-500 transition px-3 py-2 rounded-md text-sm font-medium">Calendar</Link>
+              <Link to="/about" className="hover:text-purple-500 transition px-3 py-2 rounded-md text-sm font-medium">About</Link>
+              <Link to="/contact" className="hover:text-purple-500 transition px-3 py-2 rounded-md text-sm font-medium">Contact</Link>
               {user ? (
                 <>
                   <Link to="/membership" className="hover:text-purple-500 transition px-3 py-2 rounded-md text-sm font-medium">Membership</Link>
@@ -64,22 +66,24 @@ const Navbar = () => {
         </div>
       </div>
       {isOpen && (
-        <div className="md:hidden glass absolute w-full">
+        <div className="md:hidden glass absolute w-full shadow-lg border-b border-gray-200 dark:border-gray-800">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <Link to="/events" className="block hover:bg-purple-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">Events</Link>
-            <Link to="/gallery" className="block hover:bg-purple-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">Gallery</Link>
-            <Link to="/calendar" className="block hover:bg-purple-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">Calendar</Link>
+            <Link to="/events" onClick={() => setIsOpen(false)} className="block hover:bg-purple-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">Events</Link>
+            <Link to="/gallery" onClick={() => setIsOpen(false)} className="block hover:bg-purple-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">Gallery</Link>
+            <Link to="/calendar" onClick={() => setIsOpen(false)} className="block hover:bg-purple-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">Calendar</Link>
+            <Link to="/about" onClick={() => setIsOpen(false)} className="block hover:bg-purple-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">About</Link>
+            <Link to="/contact" onClick={() => setIsOpen(false)} className="block hover:bg-purple-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">Contact</Link>
             {user ? (
               <>
-                <Link to="/membership" className="block hover:bg-purple-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">Membership</Link>
-                <Link to="/profile" className="block hover:bg-purple-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">Profile</Link>
+                <Link to="/membership" onClick={() => setIsOpen(false)} className="block hover:bg-purple-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">Membership</Link>
+                <Link to="/profile" onClick={() => setIsOpen(false)} className="block hover:bg-purple-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">Profile</Link>
                 {user.role === 'admin' && (
-                  <Link to="/admin" className="block hover:bg-purple-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">Admin</Link>
+                  <Link to="/admin" onClick={() => setIsOpen(false)} className="block hover:bg-purple-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">Admin</Link>
                 )}
-                <button onClick={handleLogout} className="w-full text-left block hover:bg-purple-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">Logout</button>
+                <button onClick={() => { handleLogout(); setIsOpen(false); }} className="w-full text-left block hover:bg-purple-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">Logout</button>
               </>
             ) : (
-              <Link to="/login" className="block hover:bg-purple-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">Login</Link>
+              <Link to="/login" onClick={() => setIsOpen(false)} className="block hover:bg-purple-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">Login</Link>
             )}
           </div>
         </div>
