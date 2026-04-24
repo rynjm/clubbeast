@@ -11,7 +11,7 @@ const Events = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const { data } = await axios.get("http://localhost:5000/api/events");
+        const { data } = await axios.get("https://clubbeast.onrender.com/api/events");
         setEvents(data);
       } catch (error) {
         console.error("Error fetching events", error);

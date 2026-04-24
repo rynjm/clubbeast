@@ -23,7 +23,7 @@ const EventDetails = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:5000/api/events/${id}`);
+        const { data } = await axios.get(`https://clubbeast.onrender.com/api/events/${id}`);
         setEvent(data);
       } catch (error) {
         console.error("Error fetching event", error);
@@ -53,7 +53,7 @@ const EventDetails = () => {
       return;
     }
     try {
-      await axios.post("http://localhost:5000/api/registrations", {
+      await axios.post("https://clubbeast.onrender.com/api/registrations", {
         eventId: id,
         ...formData
       }, {

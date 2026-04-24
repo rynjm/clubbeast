@@ -21,13 +21,13 @@ const AdminDashboard = () => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
       if (activeTab === "events") {
-        const { data } = await axios.get("http://localhost:5000/api/events");
+        const { data } = await axios.get("https://clubbeast.onrender.com/api/events");
         setEvents(data);
       } else if (activeTab === "users") {
-        const { data } = await axios.get("http://localhost:5000/api/users", config);
+        const { data } = await axios.get("https://clubbeast.onrender.com/api/users", config);
         setUsers(data);
       } else if (activeTab === "registrations") {
-        const { data } = await axios.get("http://localhost:5000/api/registrations", config);
+        const { data } = await axios.get("https://clubbeast.onrender.com/api/registrations", config);
         setRegistrations(data);
       }
     } catch (error) {
@@ -38,7 +38,7 @@ const AdminDashboard = () => {
   const handleCreateEvent = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/events", newEvent, {
+      await axios.post("https://clubbeast.onrender.com/api/events", newEvent, {
         headers: { Authorization: `Bearer ${user.token}` }
       });
       setNewEvent({ title: "", description: "", date: "", location: "", imageUrl: "" });
@@ -51,7 +51,7 @@ const AdminDashboard = () => {
   const handleDeleteEvent = async (id) => {
     if(window.confirm("Are you sure?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/events/${id}`, {
+        await axios.delete(`https://clubbeast.onrender.com/api/events/${id}`, {
           headers: { Authorization: `Bearer ${user.token}` }
         });
         fetchData();

@@ -20,7 +20,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchRegistrations = async () => {
       try {
-        const { data } = await axios.get("http://localhost:5000/api/registrations/myregistrations", {
+        const { data } = await axios.get("https://clubbeast.onrender.com/api/registrations/myregistrations", {
           headers: { Authorization: `Bearer ${user.token}` }
         });
         setRegistrations(data);
@@ -36,7 +36,7 @@ const Profile = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.put("http://localhost:5000/api/users/profile", formData, {
+      const { data } = await axios.put("https://clubbeast.onrender.com/api/users/profile", formData, {
         headers: { Authorization: `Bearer ${user.token}` }
       });
       setMsg("Profile updated successfully!");
