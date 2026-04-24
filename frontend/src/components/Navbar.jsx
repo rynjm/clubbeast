@@ -19,71 +19,101 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logout();
+    setIsOpen(false);
     navigate("/login");
   };
 
+  const navLinks = [
+    { name: "Events", path: "/events" },
+    { name: "Gallery", path: "/gallery" },
+    { name: "Calendar", path: "/calendar" },
+    { name: "About", path: "/about" },
+    { name: "Contact", path: "/contact" },
+  ];
+
   return (
-    <nav className="fixed w-full z-50 glass transition-colors duration-300">
+    <nav className="fixed w-full z-50 glass border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
+          {/* Logo */}
           <div className="flex-shrink-0">
             <Link to="/" className="text-2xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
               CLUB CULTUREL EL MEDINA
             </Link>
           </div>
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-6">
-              <Link to="/events" className="hover:text-purple-500 transition px-3 py-2 rounded-md text-sm font-medium">Events</Link>
-              <Link to="/gallery" className="hover:text-purple-500 transition px-3 py-2 rounded-md text-sm font-medium">Gallery</Link>
-              <Link to="/calendar" className="hover:text-purple-500 transition px-3 py-2 rounded-md text-sm font-medium">Calendar</Link>
-              <Link to="/about" className="hover:text-purple-500 transition px-3 py-2 rounded-md text-sm font-medium">About</Link>
-              <Link to="/contact" className="hover:text-purple-500 transition px-3 py-2 rounded-md text-sm font-medium">Contact</Link>
-              {user ? (
-                <>
-                  <Link to="/membership" className="hover:text-purple-500 transition px-3 py-2 rounded-md text-sm font-medium">Membership</Link>
-                  <Link to="/profile" className="hover:text-purple-500 transition px-3 py-2 rounded-md text-sm font-medium">Profile</Link>
-                  {user.role === 'admin' && (
-                    <Link to="/admin" className="hover:text-purple-500 transition px-3 py-2 rounded-md text-sm font-medium">Admin</Link>
-                  )}
-                  <button onClick={handleLogout} className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md text-sm font-medium transition">Logout</button>
-                </>
-              ) : (
-                <Link to="/login" className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md text-sm font-medium transition">Login</Link>
-              )}
-              <button onClick={toggleDarkMode} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition">
-                {isDark ? <Sun size={20} /> : <Moon size={20} />}
-              </button>
-            </div>
-          </div>
-          <div className="-mr-2 flex md:hidden">
-            <button onClick={toggleDarkMode} className="p-2 mr-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center space-x-4">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                to={link.path}
+                className="hover:text-purple-500 transition px-3 py-2 rounded-md text-sm font-medium"
+              >
+                {link.name}
+              </Link>
+            ))}
+            
+            {user ? (
+              <>
+                <Link to="/membership" className="hover:text-purple-500 transition px-3 py-2 rounded-md text-sm font-medium">Membership</Link>
+                <Link to="/profile" className="hover:text-purple-500 transition px-3 py-2 rounded-md text-sm font-medium">Profile</Link>
+                {user.role === 'admin' && (
+                  <Link to="/admin" className="hover:text-purple-500 transition px-3 py-2 rounded-md text-sm font-medium">Admin</Link>
+                )}
+                <button onClick={handleLogout} className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md text-sm font-medium transition">Logout</button>
+              </>
+            ) : (
+              <Link to="/login" className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md text-sm font-medium transition">Login</Link>
+            )}
+            
+            <button onClick={toggleDarkMode} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition ml-2">
               {isDark ? <Sun size={20} /> : <Moon size={20} />}
             </button>
-            <button onClick={() => setIsOpen(!isOpen)} className="inline-flex items-center justify-center p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition">
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </div>
+
+          {/* Mobile Button Wrapper */}
+          <div className="flex md:hidden items-center space-x-2">
+            <button onClick={toggleDarkMode} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+              {isDark ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-purple-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition focus:outline-none"
+              aria-label="Toggle menu"
+            >
+              {isOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
         </div>
       </div>
+
+      {/* Mobile Menu Dropdown */}
       {isOpen && (
-        <div className="md:hidden glass absolute w-full shadow-lg border-b border-gray-200 dark:border-gray-800">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <Link to="/events" onClick={() => setIsOpen(false)} className="block hover:bg-purple-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">Events</Link>
-            <Link to="/gallery" onClick={() => setIsOpen(false)} className="block hover:bg-purple-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">Gallery</Link>
-            <Link to="/calendar" onClick={() => setIsOpen(false)} className="block hover:bg-purple-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">Calendar</Link>
-            <Link to="/about" onClick={() => setIsOpen(false)} className="block hover:bg-purple-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">About</Link>
-            <Link to="/contact" onClick={() => setIsOpen(false)} className="block hover:bg-purple-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">Contact</Link>
+        <div className="md:hidden glass absolute top-16 left-0 w-full shadow-2xl border-b border-gray-200 dark:border-gray-800 z-50 animate-in slide-in-from-top duration-200">
+          <div className="px-4 pt-2 pb-6 space-y-2 bg-white/90 dark:bg-black/90 backdrop-blur-xl">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                to={link.path}
+                onClick={() => setIsOpen(false)}
+                className="block hover:bg-purple-500 hover:text-white px-4 py-3 rounded-xl text-base font-medium transition-all"
+              >
+                {link.name}
+              </Link>
+            ))}
+            
             {user ? (
               <>
-                <Link to="/membership" onClick={() => setIsOpen(false)} className="block hover:bg-purple-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">Membership</Link>
-                <Link to="/profile" onClick={() => setIsOpen(false)} className="block hover:bg-purple-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">Profile</Link>
+                <Link to="/membership" onClick={() => setIsOpen(false)} className="block hover:bg-purple-500 hover:text-white px-4 py-3 rounded-xl text-base font-medium transition-all">Membership</Link>
+                <Link to="/profile" onClick={() => setIsOpen(false)} className="block hover:bg-purple-500 hover:text-white px-4 py-3 rounded-xl text-base font-medium transition-all">Profile</Link>
                 {user.role === 'admin' && (
-                  <Link to="/admin" onClick={() => setIsOpen(false)} className="block hover:bg-purple-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">Admin</Link>
+                  <Link to="/admin" onClick={() => setIsOpen(false)} className="block hover:bg-purple-500 hover:text-white px-4 py-3 rounded-xl text-base font-medium transition-all">Admin</Link>
                 )}
-                <button onClick={() => { handleLogout(); setIsOpen(false); }} className="w-full text-left block hover:bg-purple-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">Logout</button>
+                <button onClick={handleLogout} className="w-full text-left block hover:bg-purple-500 hover:text-white px-4 py-3 rounded-xl text-base font-medium transition-all">Logout</button>
               </>
             ) : (
-              <Link to="/login" onClick={() => setIsOpen(false)} className="block hover:bg-purple-500 hover:text-white px-3 py-2 rounded-md text-base font-medium">Login</Link>
+              <Link to="/login" onClick={() => setIsOpen(false)} className="block hover:bg-purple-500 hover:text-white px-4 py-3 rounded-xl text-base font-medium transition-all">Login</Link>
             )}
           </div>
         </div>
